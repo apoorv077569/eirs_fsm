@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "39558485138",
+    "project_id": "eirsfsm",
+    "storage_bucket": "eirsfsm.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39558485138:android:453526497bdbd08d00424b",
+        "android_client_info": {
+          "package_name": "com.example.eirs_fsm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7zCiAFQfwb3uXaXa2YWFlzs39bJfBzT4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
