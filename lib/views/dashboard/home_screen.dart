@@ -1,3 +1,4 @@
+import 'package:eirs_fsm/core/routes/app_routes.dart';
 import 'package:eirs_fsm/views/job_details/job_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -81,9 +82,9 @@ class HomeScreen extends StatelessWidget {
         return JobCard(
           job: jobs[index],
           onTap: () {
-              Get.to(
-                () => const JobDetailScreen(),
-              arguments: jobs[index]
+              Get.toNamed(
+                AppRoutes.jobDetail,
+                arguments: jobs[index]
               );
           },
         );
