@@ -1,5 +1,7 @@
-import 'package:eirs_fsm/core/constants/colors.dart';
-import 'package:eirs_fsm/views/auth/login_screen.dart';
+import 'package:eirs_fsm/core/constants/strings.dart';
+import 'package:eirs_fsm/core/routes/app_pages.dart';
+import 'package:eirs_fsm/core/routes/app_routes.dart';
+import 'package:eirs_fsm/core/theme/app_theme.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -10,18 +12,22 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'EIRS',
+      title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: AppColors.primary,
-        scaffoldBackgroundColor: AppColors.background,
-        useMaterial3: true,
+      theme: AppTheme.lightTheme(),
+
+      // ─── Routing ───
+      initialRoute: AppPages.initial,
+      getPages: AppPages.pages,
+      unknownRoute: GetPage(
+        name: '/not-found',
+        page: () => const Scaffold(
+          body: Center(child: Text("Page Not Found")),
+        ),
       ),
-      home: const LoginScreen(),
     );
   }
 }

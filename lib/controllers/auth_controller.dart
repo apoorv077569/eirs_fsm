@@ -1,6 +1,4 @@
-
-import 'package:eirs_fsm/views/auth/otp_screen.dart';
-import 'package:eirs_fsm/views/dashboard/home_screen.dart';
+import 'package:eirs_fsm/core/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -9,8 +7,8 @@ class AuthController extends GetxController {
   final phoneController = TextEditingController();
   final otpController = TextEditingController();
 
-  void sendOtp() async{
-    if(phoneController.text.isEmpty){
+  void sendOtp() async {
+    if (phoneController.text.isEmpty) {
       Get.snackbar("Error", "Enter phone number");
       return;
     }
@@ -18,16 +16,20 @@ class AuthController extends GetxController {
     await Future.delayed(const Duration(seconds: 2));
     isLoading.value = false;
 
-    Get.to(()=> const OtpScreen());
+    // ✅ Route name use karo
+    Get.toNamed(AppRoutes.otp);
   }
-  void verifyOtp() async{
-    if(otpController.text.isEmpty){
-        Get.snackbar("Error", "Please Enter an otp");
-        return;
+
+  void verifyOtp() async {
+    if (otpController.text.isEmpty) {
+      Get.snackbar("Error", "Please Enter an OTP");
+      return;
     }
     isLoading.value = true;
     await Future.delayed(const Duration(seconds: 2));
     isLoading.value = false;
-    Get.offAll(()=> const HomeScreen());
+
+    // ✅ Route name use karo
+    Get.offAllNamed(AppRoutes.main);
   }
 }
