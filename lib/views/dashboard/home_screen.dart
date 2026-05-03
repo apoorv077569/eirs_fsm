@@ -1,6 +1,8 @@
+import 'package:eirs_fsm/controllers/notification_controller.dart';
 import 'package:eirs_fsm/core/constants/strings.dart';
 import 'package:eirs_fsm/core/routes/app_routes.dart';
 import 'package:eirs_fsm/views/job_details/job_details_screen.dart';
+import 'package:eirs_fsm/views/notification/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/home_controller.dart';
@@ -24,39 +26,88 @@ class HomeScreen extends StatelessWidget {
           title: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AppStrings.dashboard, style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
-              Text(AppStrings.partnerApp, style: TextStyle(color: Colors.grey, fontSize: 12)),
+              Text(
+                AppStrings.dashboard,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                AppStrings.partnerApp,
+                style: TextStyle(color: Colors.grey, fontSize: 12),
+              ),
             ],
           ),
           actions: [
-            // ONLINE / OFFLINE TOGGLE
-            Obx(() => Row(
-              children: [
-                Text(
-                  controller.isOnline.value ? AppStrings.online : AppStrings.offline,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: controller.isOnline.value ? Colors.green : Colors.grey
+            Obx(() {
+              final notifCtrl = Get.put(NotificationController());
+              return Stack(
+                children: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.notifications_outlined,
+                      color: Colors.black,
+                    ),
+                    onPressed: () => Get.to(() => const NotificationScreen()),
                   ),
-                ),
-                Switch(
-                  value: controller.isOnline.value,
-                  activeThumbColor: Colors.green,
-                  onChanged: (val) => controller.toggleOnline(val),
-                ),
-                const SizedBox(width: 10),
-              ],
-            )),
+                  if (notifCtrl.unreadCount.value > 0)
+                    Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          "${notifCtrl.unreadCount.value}",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            }),
+
+            // ONLINE / OFFLINE TOGGLE
+            Obx(
+              () => Row(
+                children: [
+                  Text(
+                    controller.isOnline.value
+                        ? AppStrings.online
+                        : AppStrings.offline,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color:
+                          controller.isOnline.value
+                              ? Colors.green
+                              : Colors.grey,
+                    ),
+                  ),
+                  Switch(
+                    value: controller.isOnline.value,
+                    activeThumbColor: Colors.green,
+                    onChanged: (val) => controller.toggleOnline(val),
+                  ),
+                  const SizedBox(width: 10),
+                ],
+              ),
+            ),
           ],
           bottom: const TabBar(
             labelColor: AppColors.primary,
             unselectedLabelColor: Colors.grey,
             indicatorColor: AppColors.primary,
             indicatorWeight: 3,
-            tabs: [
-              Tab(text: "New Requests"),
-              Tab(text: "My Jobs"),
-            ],
+            tabs: [Tab(text: "New Requests"), Tab(text: "My Jobs")],
           ),
         ),
         body: TabBarView(
@@ -83,10 +134,7 @@ class HomeScreen extends StatelessWidget {
         return JobCard(
           job: jobs[index],
           onTap: () {
-              Get.toNamed(
-                AppRoutes.jobDetail,
-                arguments: jobs[index]
-              );
+            Get.toNamed(AppRoutes.jobDetail, arguments: jobs[index]);
           },
         );
       },

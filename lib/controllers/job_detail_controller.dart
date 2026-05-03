@@ -1,6 +1,7 @@
 import 'package:eirs_fsm/controllers/home_controller.dart';
 import 'package:eirs_fsm/controllers/wallet_controller.dart';
 import 'package:eirs_fsm/data/models/job_model.dart';
+import 'package:eirs_fsm/data/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 class JobDetailController extends GetxController {
 
   final HomeController homeController = Get.find<HomeController>();
+  final NotificationService _notificationService = NotificationService();
 
   final WalletController walletController = Get.isRegistered<WalletController>()
     ? Get.find<WalletController>()
@@ -33,6 +35,10 @@ class JobDetailController extends GetxController {
     if (enteredPin == "1234") {
       updateStatus(JobStatus.inProgress);
       Get.back();
+        _notificationService.showJobStatusUpdate(
+    jobId: job.value.id,
+    status: 'inProgress',
+  );
       Get.snackbar(
         "Success",
         "Job Started Successfully!",
@@ -85,7 +91,16 @@ class JobDetailController extends GetxController {
     if (enteredPin == "5678") {
       debugPrint("✅ End OTP verified - Job completing");
       updateStatus(JobStatus.completed);
+        _notificationService.showJobStatusUpdate(
+    jobId: job.value.id,
+    status: "completed",
+  );
       walletController.addJobEarning(job.value.id, job.value.customerName, job.value.amount);
+
+        _notificationService.showWalletUpdate(
+    amount: job.value.amount,
+    type: 'credit',
+  );
       Get.back();
       Get.snackbar(
         "Great Job!",

@@ -2,10 +2,13 @@ import 'package:eirs_fsm/core/constants/strings.dart';
 import 'package:eirs_fsm/core/routes/app_pages.dart';
 import 'package:eirs_fsm/core/routes/app_routes.dart';
 import 'package:eirs_fsm/core/theme/app_theme.dart';
+import 'package:eirs_fsm/data/services/notification_service.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().initialize();
   runApp(const MyApp());
 }
 
