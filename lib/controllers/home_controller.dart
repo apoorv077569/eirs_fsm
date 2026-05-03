@@ -6,17 +6,18 @@ class HomeController extends GetxController {
 
   var newRequests = <JobModel>[].obs;
   var myJobs = <JobModel>[].obs;
-  
 
   @override
   void onInit() {
     super.onInit();
     loadMockData();
   }
-  void toggleOnline(bool val){
+
+  void toggleOnline(bool val) {
     isOnline.value = val;
   }
-  void loadMockData(){
+
+  void loadMockData() {
     newRequests.addAll([
       JobModel(
         id: "101",
@@ -28,7 +29,7 @@ class HomeController extends GetxController {
         dateTime: DateTime.now(),
         lat: 28.6289,
         lng: 77.3723,
-        jobStatus: JobStatus.pending
+        jobStatus: JobStatus.pending,
       ),
       JobModel(
         id: "102",
@@ -40,7 +41,7 @@ class HomeController extends GetxController {
         dateTime: DateTime.now().add(const Duration(hours: 1)),
         lat: 26.8594,
         lng: 80.9698,
-        jobStatus: JobStatus.pending
+        jobStatus: JobStatus.pending,
       ),
     ]);
     myJobs.addAll([
@@ -54,8 +55,36 @@ class HomeController extends GetxController {
         lat: 40.7831,
         lng: -73.9712,
         customerPhone: "1234567890",
-        jobStatus: JobStatus.accepted
+        jobStatus: JobStatus.accepted,
       ),
     ]);
+  }
+
+  void syncUpdateJob(JobModel updatedJob) {
+    final newReqIndex = newRequests.indexWhere(
+      (job) => job.id == updatedJob.id,
+    );
+    if (newReqIndex != -1) {
+      if (updatedJob.jobStatus == JobStatus.accepted ||
+          updatedJob.jobStatus == JobStatus.inProgress ||
+          updatedJob.jobStatus == JobStatus.completed) {
+        newRequests.removeAt(newReqIndex);
+        final myJobIndex = myJobs.indexWhere((job) => job.id == updatedJob.id);
+        if (myJobIndex != -1) {
+          myJobs[myJobIndex] = updatedJob;
+        } else {
+          myJobs.insert(0, updatedJob);
+        }
+      } else {
+        final myJobIndex = myJobs.indexWhere((job) => job.id == updatedJob.id);
+        if (myJobIndex != -1) {
+          myJobs[myJobIndex] = updatedJob;
+        } else {
+          myJobs.insert(0, updatedJob);
+        }
+      }
+      newRequests.refresh();
+      myJobs.refresh();
+    }
   }
 }

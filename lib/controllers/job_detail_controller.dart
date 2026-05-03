@@ -1,3 +1,4 @@
+import 'package:eirs_fsm/controllers/home_controller.dart';
 import 'package:eirs_fsm/data/models/job_model.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -6,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class JobDetailController extends GetxController {
+
+  final HomeController homeController = Get.find<HomeController>();
   late Rx<JobModel> job;
   var isDialogLoading = false.obs;
   var beforePhotos = <File>[].obs;
@@ -149,7 +152,8 @@ class JobDetailController extends GetxController {
     job.update((val) {
       val?.jobStatus = newStatus;
     });
-    Get.snackbar("Suceess", "Status updated to ${newStatus.name}");
+    homeController.syncUpdateJob(job.value);
+    Get.snackbar("Success", "Status updated to ${newStatus.name}");
   }
 
   void addBeforePhoto() async {
