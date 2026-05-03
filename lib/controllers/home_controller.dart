@@ -21,6 +21,7 @@ class HomeController extends GetxController {
       JobModel(
         id: "101",
         customerName: "Rahul Sharma",
+        customerPhone: "1234567890",
         serviceType: "AC Repair",
         address: "B-12 Sector 62 Noida",
         amount: 450.00,
@@ -32,6 +33,7 @@ class HomeController extends GetxController {
       JobModel(
         id: "102",
         customerName: "Aarya Yadav",
+        customerPhone: "0987654321",
         serviceType: "Laptop Repair",
         address: "Indira Nagar Lucknow",
         amount: 1000.00,
@@ -51,6 +53,7 @@ class HomeController extends GetxController {
         dateTime: DateTime.now().subtract(const Duration(hours: 2)),
         lat: 40.7831,
         lng: -73.9712,
+        customerPhone: "1234567890",
         jobStatus: JobStatus.accepted
       ),
     ]);
