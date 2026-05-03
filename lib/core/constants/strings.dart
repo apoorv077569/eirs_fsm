@@ -1,6 +1,7 @@
 class AppStrings {
   // Auth
   static const String login = "Login";
+  static const String appName = "EIRS";
   static const String verifyOtp = "Verify OTP";
   static const String enterPhoneNumber = "Enter Phone Number";
   static const String enterOtp = "Enter the code sent to your number";

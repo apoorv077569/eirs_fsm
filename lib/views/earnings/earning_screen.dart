@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:eirs_fsm/core/constants/colors.dart';
 import 'package:eirs_fsm/core/constants/strings.dart';
 import 'package:eirs_fsm/data/models/earning_model.dart';

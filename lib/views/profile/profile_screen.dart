@@ -3,7 +3,6 @@
 import 'package:eirs_fsm/core/constants/colors.dart';
 import 'package:eirs_fsm/core/constants/strings.dart';
 import 'package:eirs_fsm/core/routes/app_routes.dart';
-import 'package:eirs_fsm/views/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

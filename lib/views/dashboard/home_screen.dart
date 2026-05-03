@@ -1,3 +1,4 @@
+import 'package:eirs_fsm/core/constants/strings.dart';
 import 'package:eirs_fsm/core/routes/app_routes.dart';
 import 'package:eirs_fsm/views/job_details/job_details_screen.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,8 @@ class HomeScreen extends StatelessWidget {
           title: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Dashboard", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
-              Text("Partner App", style: TextStyle(color: Colors.grey, fontSize: 12)),
+              Text(AppStrings.dashboard, style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
+              Text(AppStrings.partnerApp, style: TextStyle(color: Colors.grey, fontSize: 12)),
             ],
           ),
           actions: [
@@ -32,7 +33,7 @@ class HomeScreen extends StatelessWidget {
             Obx(() => Row(
               children: [
                 Text(
-                  controller.isOnline.value ? "Online" : "Offline",
+                  controller.isOnline.value ? AppStrings.online : AppStrings.offline,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: controller.isOnline.value ? Colors.green : Colors.grey
@@ -40,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Switch(
                   value: controller.isOnline.value,
-                  activeColor: Colors.green,
+                  activeThumbColor: Colors.green,
                   onChanged: (val) => controller.toggleOnline(val),
                 ),
                 const SizedBox(width: 10),
@@ -73,7 +74,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildList(List jobs) {
     if (jobs.isEmpty) {
-      return const Center(child: Text("No jobs available"));
+      return const Center(child: Text(AppStrings.noJobsAvailable));
     }
     return ListView.builder(
       padding: const EdgeInsets.only(top: 10),

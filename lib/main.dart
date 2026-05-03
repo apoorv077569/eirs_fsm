@@ -1,3 +1,4 @@
+import 'package:eirs_fsm/core/constants/strings.dart';
 import 'package:eirs_fsm/core/routes/app_pages.dart';
 import 'package:eirs_fsm/core/routes/app_routes.dart';
 import 'package:eirs_fsm/core/theme/app_theme.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'EIRS',
+      title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme(),
 
