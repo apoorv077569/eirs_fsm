@@ -118,14 +118,31 @@ class JobDetailController extends GetxController {
   void openMap() async {
     // Mock Coordinates
 
-    const double lat = 28.6139;
-    const double lng = 77.2090;
+    final double lat = job.value.lat;
+    final double lng = job.value.lng;
 
-    final Uri googleMapsUrl = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
+    if (lat == null || lng == null) {
+      Get.snackbar("Error", "Location coordinates not available");
+      return;
+    }
+
+    final Uri googleMapsUrl = Uri.parse(
+      "google.navigation:q=$lat,$lng&mode=driving",
+    );
 
     if (!await launchUrl(googleMapsUrl)) {
       Get.snackbar("Error", "Could not open Maps");
     }
+
+    // try {
+    //   if (await canLaunchUrl(googleMapsUrl)) {
+    //     await launchUrl(googleMapsUrl,mode: LaunchMode.externalApplication);
+    //   } else {
+    //     Get.snackbar("Error", "Could not open Maps");
+    //   }
+    // } catch (e) {
+    //   Get.snackbar("Error", "Could not open Maps: $e.message");
+    // }
   }
 
   void updateStatus(JobStatus newStatus) {
