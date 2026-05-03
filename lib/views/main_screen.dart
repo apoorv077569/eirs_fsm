@@ -2,7 +2,6 @@ import 'package:eirs_fsm/views/dashboard/home_screen.dart';
 import 'package:eirs_fsm/views/earnings/earning_screen.dart';
 import 'package:eirs_fsm/views/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

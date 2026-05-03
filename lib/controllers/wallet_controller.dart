@@ -1,4 +1,5 @@
 import 'package:eirs_fsm/data/models/wallet_model.dart';
+import 'package:eirs_fsm/data/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,6 +7,9 @@ class WalletController extends GetxController {
   var balance = 0.0.obs;
   var transactions = <WalletTransaction>[].obs;
   var isLoading = false.obs;
+
+  // ─── Notification Service ───
+  final NotificationService _notificationService = NotificationService();
 
   @override
   void onInit() {
@@ -45,7 +49,7 @@ class WalletController extends GetxController {
       ),
       WalletTransaction(
         id: "TXN004",
-        title: "Plumbing - Daini Daniels",
+        title: "Plumbing - Raj Kapoor",
         description: "Job #201 completed",
         amount: 350.0,
         dateTime: DateTime.now().subtract(const Duration(days: 3)),
@@ -71,7 +75,7 @@ class WalletController extends GetxController {
     ]);
   }
 
-  // Job complete hone ke baad wallet update hoga
+  // ─── Job Earning (Credit) ───
   void addJobEarning(String jobId, String customerName, double amount) {
     balance.value += amount;
 
@@ -90,10 +94,16 @@ class WalletController extends GetxController {
 
     transactions.refresh();
 
-    debugPrint("💰 Wallet updated: +₹$amount | Balance: ₹${balance.value}");
+    // ─── Notification ───
+    _notificationService.showWalletUpdate(
+      amount: amount,
+      type: 'credit',
+    );
+
+    debugPrint("💰 +₹$amount | Balance: ₹${balance.value}");
   }
 
-  // Money add karo (dummy)
+  // ─── Add Money (Credit) ───
   void addMoney(double amount) {
     balance.value += amount;
 
@@ -111,6 +121,12 @@ class WalletController extends GetxController {
 
     transactions.refresh();
 
+    // ─── Notification ───
+    _notificationService.showWalletUpdate(
+      amount: amount,
+      type: 'credit',
+    );
+
     Get.snackbar(
       "Success",
       "₹${amount.toStringAsFixed(0)} added to wallet",
@@ -119,7 +135,7 @@ class WalletController extends GetxController {
     );
   }
 
-  // Withdraw karo (dummy)
+  // ─── Withdraw Money (Debit) ───
   void withdrawMoney(double amount) {
     if (amount > balance.value) {
       Get.snackbar(
@@ -147,6 +163,12 @@ class WalletController extends GetxController {
 
     transactions.refresh();
 
+    // ─── Notification ───
+    _notificationService.showWalletUpdate(
+      amount: amount,
+      type: 'debit',
+    );
+
     Get.snackbar(
       "Success",
       "₹${amount.toStringAsFixed(0)} withdrawn from wallet",
@@ -155,6 +177,7 @@ class WalletController extends GetxController {
     );
   }
 
+  // ─── Getters ───
   double get totalEarnings => transactions
       .where((t) => t.type == TransactionType.credit)
       .fold(0.0, (sum, t) => sum + t.amount);
