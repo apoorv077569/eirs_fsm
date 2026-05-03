@@ -2,6 +2,7 @@
 
 import 'package:eirs_fsm/controllers/job_detail_controller.dart';
 import 'package:eirs_fsm/core/constants/colors.dart';
+import 'package:eirs_fsm/core/constants/strings.dart';
 import 'package:eirs_fsm/data/models/job_model.dart';
 import 'package:eirs_fsm/views/widgets/otp_dialog.dart';
 import 'package:eirs_fsm/views/widgets/photo_upload_card.dart';
@@ -246,7 +247,7 @@ class JobDetailScreen extends StatelessWidget {
             if (controller.job.value.jobStatus == JobStatus.inProgress ||
                 controller.job.value.jobStatus == JobStatus.completed)
               Obx(() => PhotoUploadCard(
-                title: "Before Photos",
+                title: AppStrings.beforeWork,
                 subtitle: controller.job.value.jobStatus == JobStatus.inProgress
                     ? "Capture current condition photos"
                     : "Captured before work",
@@ -268,7 +269,7 @@ class JobDetailScreen extends StatelessWidget {
             if (controller.job.value.jobStatus == JobStatus.inProgress ||
                 controller.job.value.jobStatus == JobStatus.completed)
               Obx(() => PhotoUploadCard(
-                title: "After Photos",
+                title: AppStrings.afterWork,
                 subtitle: controller.job.value.jobStatus == JobStatus.inProgress
                     ? "Capture completion photos"
                     : "Captured after work",

@@ -56,4 +56,8 @@ class AppStrings {
   static const String enterOtpError = "Please Enter an OTP";
   static const String couldNotOpenMaps = "Could not open Maps";
   static const String leaveRequestSubmitted = "Leave request submitted!";
+
+  static String beforeWork = "Before Work";
+
+  static String  afterWork = "After Work";
 }

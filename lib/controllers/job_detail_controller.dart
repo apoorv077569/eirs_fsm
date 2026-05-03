@@ -52,7 +52,7 @@ class JobDetailController extends GetxController {
     if (beforePhotos.isEmpty) {
       Get.snackbar(
         "Photo Required",
-        "Please capture at least 1 before photo",
+        "Please capture at least 1 photo of before work",
         backgroundColor: Colors.orange,
         colorText: Colors.white,
       );
@@ -63,7 +63,7 @@ class JobDetailController extends GetxController {
     if (afterPhotos.isEmpty) {
       Get.snackbar(
         "Photo Required",
-        "Please capture at least 1 after photo",
+        "Please capture at least 1 photo of after work",
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
