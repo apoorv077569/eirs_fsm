@@ -7,6 +7,8 @@ class JobModel {
   final String address;
   final double amount;
   final DateTime dateTime;
+  final double lat;
+  final double lng;
   JobStatus jobStatus;
 
   JobModel({
@@ -16,6 +18,8 @@ class JobModel {
     required this.address,
     required this.amount,
     required this.dateTime,
+    required this.lat,
+    required this.lng,
     this.jobStatus = JobStatus.pending,
   });
 }

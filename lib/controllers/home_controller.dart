@@ -25,6 +25,8 @@ class HomeController extends GetxController {
         address: "B-12 Sector 62 Noida",
         amount: 450.00,
         dateTime: DateTime.now(),
+        lat: 28.6289,
+        lng: 77.3723,
         jobStatus: JobStatus.pending
       ),
       JobModel(
@@ -34,6 +36,8 @@ class HomeController extends GetxController {
         address: "Indira Nagar Lucknow",
         amount: 1000.00,
         dateTime: DateTime.now().add(const Duration(hours: 1)),
+        lat: 26.8594,
+        lng: 80.9698,
         jobStatus: JobStatus.pending
       ),
     ]);
@@ -45,6 +49,8 @@ class HomeController extends GetxController {
         address: "Golf Course Road,New York",
         amount: 350.00,
         dateTime: DateTime.now().subtract(const Duration(hours: 2)),
+        lat: 40.7831,
+        lng: -73.9712,
         jobStatus: JobStatus.accepted
       ),
     ]);

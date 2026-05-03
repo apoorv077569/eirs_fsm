@@ -1,5 +1,6 @@
 import 'package:eirs_fsm/controllers/auth_controller.dart';
 import 'package:eirs_fsm/core/constants/colors.dart';
+import 'package:eirs_fsm/core/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +21,7 @@ class LoginScreen extends StatelessWidget{
             Image.asset("assets/app_logo.png",width: 50,height: 100),
             const SizedBox(height: 20),
             const Text(
-              "EIRS",
+              AppStrings.appName,
               style: TextStyle(fontSize: 32,fontWeight: FontWeight.bold,color: AppColors.primary),
               textAlign: TextAlign.center,
             ),
@@ -28,8 +29,9 @@ class LoginScreen extends StatelessWidget{
             TextField(
               controller: authCtrl.phoneController,
               keyboardType: TextInputType.phone,
+              maxLength: 10,
               decoration: const InputDecoration(
-                labelText: "Phone Number",
+                labelText: AppStrings.enterPhoneNumber,
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.phone),
               ),
@@ -48,7 +50,7 @@ class LoginScreen extends StatelessWidget{
                     },
               child: authCtrl.isLoading.value
                   ? const CircularProgressIndicator(color: Colors.white)
-                  : const Text("Login", style: TextStyle(color: Colors.white)),
+                  : const Text(AppStrings.login, style: TextStyle(color: Colors.white)),
             ))
            
           ],
