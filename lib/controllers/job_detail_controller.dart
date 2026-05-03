@@ -1,4 +1,5 @@
 import 'package:eirs_fsm/controllers/home_controller.dart';
+import 'package:eirs_fsm/controllers/wallet_controller.dart';
 import 'package:eirs_fsm/data/models/job_model.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -9,6 +10,10 @@ import 'package:url_launcher/url_launcher.dart';
 class JobDetailController extends GetxController {
 
   final HomeController homeController = Get.find<HomeController>();
+
+  final WalletController walletController = Get.isRegistered<WalletController>()
+    ? Get.find<WalletController>()
+    : Get.put(WalletController());
   late Rx<JobModel> job;
   var isDialogLoading = false.obs;
   var beforePhotos = <File>[].obs;
@@ -80,10 +85,11 @@ class JobDetailController extends GetxController {
     if (enteredPin == "5678") {
       debugPrint("✅ End OTP verified - Job completing");
       updateStatus(JobStatus.completed);
+      walletController.addJobEarning(job.value.id, job.value.customerName, job.value.amount);
       Get.back();
       Get.snackbar(
         "Great Job!",
-        "Job Completed. Wallet updated",
+        "₹${job.value.amount.toStringAsFixed(0)} added to wallet",
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );

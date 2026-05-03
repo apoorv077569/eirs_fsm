@@ -9,4 +9,5 @@ abstract class AppRoutes {
   static const String earnings = '/earnings';
   static const String profile = '/profile';
   static const String leaveRequest = '/leave-request';
+  static const String wallet = '/wallet';
 }

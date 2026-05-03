@@ -1,23 +1,38 @@
-// ignore_for_file: deprecated_member_use
-
+import 'package:eirs_fsm/controllers/wallet_controller.dart';
 import 'package:eirs_fsm/core/constants/colors.dart';
 import 'package:eirs_fsm/core/constants/strings.dart';
 import 'package:eirs_fsm/core/routes/app_routes.dart';
+import 'package:eirs_fsm/views/auth/login_screen.dart';
+import 'package:eirs_fsm/views/wallet/wallet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool isAvailable = true;
+  final walletController = Get.put(WalletController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: const Text("Profile"),
+        automaticallyImplyLeading: false,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Profile Card
+            // ═══════════════════════════════════════
+            // 👤 PROFILE CARD
+            // ═══════════════════════════════════════
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(20),
@@ -55,7 +70,141 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            // Availability Toggle
+            // ═══════════════════════════════════════
+            // 💰 WALLET CARD
+            // ═══════════════════════════════════════
+            Obx(() => Card(
+              child: InkWell(
+                onTap: () => Get.toNamed(AppRoutes.wallet),
+                borderRadius: BorderRadius.circular(12),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Icon(
+                              Icons.account_balance_wallet,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "My Wallet",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  "Available Balance",
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            "₹${walletController.balance.value.toStringAsFixed(0)}",
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 16,
+                            color: Colors.grey,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      // Quick Stats
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                color: Colors.green.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "₹${walletController.totalEarnings.toStringAsFixed(0)}",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Earned",
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                color: Colors.orange.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "₹${walletController.totalWithdrawals.toStringAsFixed(0)}",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.orange,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Withdrawn",
+                                    style: TextStyle(
+                                      color: Colors.orange,
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )),
+            const SizedBox(height: 12),
+
+            // ═══════════════════════════════════════
+            // 🟢 AVAILABILITY TOGGLE
+            // ═══════════════════════════════════════
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -64,17 +213,24 @@ class ProfileScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: AppColors.completed.withOpacity(0.1),
+                        color: isAvailable
+                            ? AppColors.completed.withOpacity(0.1)
+                            : Colors.grey[100],
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.wifi_tethering, color: AppColors.completed),
+                      child: Icon(
+                        isAvailable
+                            ? Icons.wifi_tethering
+                            : Icons.wifi_tethering_off,
+                        color: isAvailable ? AppColors.completed : Colors.grey,
+                      ),
                     ),
                     const SizedBox(width: 16),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             AppStrings.availability,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -82,9 +238,13 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            AppStrings.youAreOnline,
+                            isAvailable
+                                ? AppStrings.youAreOnline
+                                : AppStrings.youAreOffline,
                             style: TextStyle(
-                              color: AppColors.completed,
+                              color: isAvailable
+                                  ? AppColors.completed
+                                  : Colors.red,
                               fontSize: 13,
                             ),
                           ),
@@ -92,12 +252,16 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     Switch(
-                      value: true,
+                      value: isAvailable,
                       onChanged: (val) {
+                        setState(() => isAvailable = val);
                         Get.snackbar(
                           AppStrings.success,
-                          val ? AppStrings.youAreOnline : AppStrings.youAreOffline,
-                          backgroundColor: val ? AppColors.completed : Colors.red,
+                          val
+                              ? AppStrings.youAreOnline
+                              : AppStrings.youAreOffline,
+                          backgroundColor:
+                              val ? AppColors.completed : Colors.red,
                           colorText: Colors.white,
                         );
                       },
@@ -109,7 +273,9 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            // Leave Request
+            // ═══════════════════════════════════════
+            // 📋 LEAVE REQUEST
+            // ═══════════════════════════════════════
             Card(
               child: ListTile(
                 leading: Container(
@@ -123,69 +289,19 @@ class ProfileScreen extends StatelessWidget {
                 title: const Text(AppStrings.requestLeave),
                 subtitle: const Text("Apply for time off"),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () {
-                  Get.dialog(
-                    AlertDialog(
-                      title: const Text(AppStrings.requestLeave),
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextField(
-                            decoration: const InputDecoration(
-                              labelText: "From Date",
-                              suffixIcon: Icon(Icons.calendar_today),
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          TextField(
-                            decoration: const InputDecoration(
-                              labelText: "To Date",
-                              suffixIcon: Icon(Icons.calendar_today),
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          TextField(
-                            maxLines: 3,
-                            decoration: const InputDecoration(
-                              labelText: "Reason",
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ],
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Get.back(),
-                          child: const Text("Cancel"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Get.back();
-                            Get.snackbar(
-                              AppStrings.success,
-                              AppStrings.leaveRequestSubmitted,
-                              backgroundColor: AppColors.completed,
-                              colorText: Colors.white,
-                            );
-                          },
-                          child: const Text("Submit"),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                onTap: () => _showLeaveDialog(),
               ),
             ),
             const SizedBox(height: 12),
 
-            // Logout Button
+            // ═══════════════════════════════════════
+            // 🚪 LOGOUT
+            // ═══════════════════════════════════════
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
                 onPressed: () {
-                  Get.offAllNamed(AppRoutes.login);
+                  Get.offAll(() => const LoginScreen());
                 },
                 icon: const Icon(Icons.logout, color: Colors.red),
                 label: const Text(
@@ -203,6 +319,60 @@ class ProfileScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showLeaveDialog() {
+    Get.dialog(
+      AlertDialog(
+        title: const Text(AppStrings.requestLeave),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              decoration: const InputDecoration(
+                labelText: "From Date",
+                suffixIcon: Icon(Icons.calendar_today),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              decoration: const InputDecoration(
+                labelText: "To Date",
+                suffixIcon: Icon(Icons.calendar_today),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              maxLines: 3,
+              decoration: const InputDecoration(
+                labelText: "Reason",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: const Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.back();
+              Get.snackbar(
+                AppStrings.success,
+                AppStrings.leaveRequestSubmitted,
+                backgroundColor: AppColors.completed,
+                colorText: Colors.white,
+              );
+            },
+            child: const Text("Submit"),
+          ),
+        ],
       ),
     );
   }

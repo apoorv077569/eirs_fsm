@@ -6,16 +6,22 @@ import 'package:eirs_fsm/views/earnings/earning_screen.dart';
 import 'package:eirs_fsm/views/job_details/job_details_screen.dart';
 import 'package:eirs_fsm/views/main_screen.dart';
 import 'package:eirs_fsm/views/profile/profile_screen.dart';
+import 'package:eirs_fsm/views/splash/splash_screen.dart';  // ← ADD
+import 'package:eirs_fsm/views/wallet/wallet_screen.dart';  // ← ADD
 import 'package:get/get.dart';
 
 class AppPages {
-  // ─── Initial Route ───
-  static const String initial = AppRoutes.login;
+  static const String initial = AppRoutes.splash;  
 
-  // ─── All Pages ───
   static final List<GetPage> pages = [
 
-    // Auth
+    GetPage(
+      name: AppRoutes.splash,
+      page: () => const SplashScreen(),
+      transition: Transition.fadeIn,
+    ),
+
+    
     GetPage(
       name: AppRoutes.login,
       page: () => const LoginScreen(),
@@ -28,14 +34,12 @@ class AppPages {
       transition: Transition.rightToLeft,
     ),
 
-    // Main (Bottom Navigation)
     GetPage(
       name: AppRoutes.main,
       page: () => const MainScreen(),
       transition: Transition.fadeIn,
     ),
 
-    // Dashboard
     GetPage(
       name: AppRoutes.dashboard,
       page: () => const HomeScreen(),
@@ -61,6 +65,13 @@ class AppPages {
       name: AppRoutes.profile,
       page: () => const ProfileScreen(),
       transition: Transition.fadeIn,
+    ),
+
+    // Wallet
+    GetPage(
+      name: AppRoutes.wallet,
+      page: () => const WalletScreen(),
+      transition: Transition.rightToLeft,
     ),
   ];
 }

@@ -47,13 +47,13 @@ class HomeController extends GetxController {
     myJobs.addAll([
       JobModel(
         id: "201",
-        customerName: "Daini Daniels",
+        customerName: "Raj Kapoor",
         serviceType: "Plumbuing",
-        address: "Golf Course Road,New York",
+        address: "Golf Course Road, Gurugram",
         amount: 350.00,
         dateTime: DateTime.now().subtract(const Duration(hours: 2)),
-        lat: 40.7831,
-        lng: -73.9712,
+        lat: 28.4395,
+        lng: 77.1015,
         customerPhone: "1234567890",
         jobStatus: JobStatus.accepted,
       ),
