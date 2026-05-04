@@ -246,21 +246,21 @@ class JobDetailScreen extends StatelessWidget {
             // ═══════════════════════════════════════
             if (controller.job.value.jobStatus == JobStatus.inProgress ||
                 controller.job.value.jobStatus == JobStatus.completed)
-              Obx(() => PhotoUploadCard(
+              PhotoUploadCard(
                 title: AppStrings.beforeWork,
                 subtitle: controller.job.value.jobStatus == JobStatus.inProgress
                     ? "Capture current condition photos"
                     : "Captured before work",
                 icon: Icons.camera_alt,
                 color: Colors.orange,
-                photos: controller.beforePhotos,
+                photos: controller.beforePhotos.toList(),
                 onCapture: controller.job.value.jobStatus == JobStatus.inProgress
                     ? () => controller.addBeforePhoto()
                     : () {},
                 onRemove: controller.job.value.jobStatus == JobStatus.inProgress
                     ? (index) => controller.removeBeforePhoto(index)
                     : (index) {},
-              )),
+              ),
             const SizedBox(height: 12),
 
             // ═══════════════════════════════════════
@@ -268,21 +268,21 @@ class JobDetailScreen extends StatelessWidget {
             // ═══════════════════════════════════════
             if (controller.job.value.jobStatus == JobStatus.inProgress ||
                 controller.job.value.jobStatus == JobStatus.completed)
-              Obx(() => PhotoUploadCard(
+              PhotoUploadCard(
                 title: AppStrings.afterWork,
                 subtitle: controller.job.value.jobStatus == JobStatus.inProgress
                     ? "Capture completion photos"
                     : "Captured after work",
                 icon: Icons.camera_enhance,
                 color: Colors.green,
-                photos: controller.afterPhotos,
+                photos: controller.afterPhotos.toList(),
                 onCapture: controller.job.value.jobStatus == JobStatus.inProgress
                     ? () => controller.addAfterPhoto()
                     : () {},
                 onRemove: controller.job.value.jobStatus == JobStatus.inProgress
                     ? (index) => controller.removeAfterPhoto(index)
                     : (index) {},
-              )),
+              ),
             const SizedBox(height: 16),
 
             // ═══════════════════════════════════════

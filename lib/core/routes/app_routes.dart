@@ -11,4 +11,6 @@ abstract class AppRoutes {
   static const String leaveRequest = '/leave-request';
   static const String wallet = '/wallet';
   static const String notifications = '/notifications';
+    static const String inAppCamera = '/in-app-camera'; // ✅ ADD
+
 }

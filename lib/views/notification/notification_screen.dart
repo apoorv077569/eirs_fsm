@@ -155,28 +155,47 @@ class NotificationScreen extends StatelessWidget {
       case NotificationType.jobUpdate:
         return Icons.update;
       case NotificationType.wallet:
+      case NotificationType.walletCredit:
         return Icons.account_balance_wallet;
+      case NotificationType.walletDebit:
+        return Icons.money_off_csred_rounded;
       case NotificationType.otp:
+      case NotificationType.otpStart:
+      case NotificationType.otpComplete:
         return Icons.lock;
       case NotificationType.leave:
+        return Icons.event_busy;
+      case NotificationType.leaveApproved:
+        return Icons.event_available;
+      case NotificationType.leaveRejected:
         return Icons.event_busy;
       case NotificationType.general:
         return Icons.notifications;
     }
   }
 
-  Color _getTypeColor(NotificationType type) {
+    Color _getTypeColor(NotificationType type) {
     switch (type) {
       case NotificationType.jobAssigned:
         return AppColors.primary;
       case NotificationType.jobUpdate:
         return AppColors.inProgress;
       case NotificationType.wallet:
+      case NotificationType.walletCredit:
         return Colors.green;
+      case NotificationType.walletDebit:
+        return Colors.red;
       case NotificationType.otp:
+      case NotificationType.otpStart:
         return Colors.orange;
+      case NotificationType.otpComplete:
+        return Colors.teal;
       case NotificationType.leave:
         return Colors.purple;
+      case NotificationType.leaveApproved:
+        return Colors.green;
+      case NotificationType.leaveRejected:
+        return Colors.red;
       case NotificationType.general:
         return Colors.grey;
     }

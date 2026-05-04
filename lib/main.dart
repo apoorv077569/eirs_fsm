@@ -1,6 +1,7 @@
 import 'package:eirs_fsm/core/constants/strings.dart';
 import 'package:eirs_fsm/core/routes/app_pages.dart';
 import 'package:eirs_fsm/core/theme/app_theme.dart';
+import 'package:eirs_fsm/data/services/network_service.dart';
 import 'package:eirs_fsm/data/services/notification_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -29,6 +30,8 @@ void main() async {
   } catch (e) {
     debugPrint("❌ Firebase Error: $e");
   }
+
+  await Get.putAsync(() => NetworkService().init());
 
   // ─── Notification Service ───
   await NotificationService().initialize();

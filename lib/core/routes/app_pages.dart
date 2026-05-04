@@ -7,6 +7,7 @@ import 'package:eirs_fsm/views/job_details/job_details_screen.dart';
 import 'package:eirs_fsm/views/main_screen.dart';
 import 'package:eirs_fsm/views/notification/notification_screen.dart';
 import 'package:eirs_fsm/views/profile/profile_screen.dart';
+import 'package:eirs_fsm/views/screens/in_app_camera_screen.dart';
 import 'package:eirs_fsm/views/splash/splash_screen.dart'; // ← ADD
 import 'package:eirs_fsm/views/wallet/wallet_screen.dart'; // ← ADD
 import 'package:get/get.dart';
@@ -78,5 +79,11 @@ class AppPages {
       page: () => const NotificationScreen(),
       transition: Transition.rightToLeft,
     ),
+    GetPage(
+  name: AppRoutes.inAppCamera,
+  page: () => const InAppCameraScreen(),
+  transition: Transition.downToUp,  // camera neeche se aayega
+  fullscreenDialog: true,           // full screen dialog
+),
   ];
 }

@@ -1,7 +1,9 @@
 import 'package:eirs_fsm/controllers/home_controller.dart';
 import 'package:eirs_fsm/controllers/wallet_controller.dart';
+import 'package:eirs_fsm/core/routes/app_routes.dart';
 import 'package:eirs_fsm/data/models/job_model.dart';
 import 'package:eirs_fsm/data/services/notification_service.dart';
+import 'package:eirs_fsm/views/screens/in_app_camera_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:get/get.dart';
@@ -9,13 +11,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class JobDetailController extends GetxController {
-
   final HomeController homeController = Get.find<HomeController>();
   final NotificationService _notificationService = NotificationService();
 
-  final WalletController walletController = Get.isRegistered<WalletController>()
-    ? Get.find<WalletController>()
-    : Get.put(WalletController());
+  final WalletController walletController =
+      Get.isRegistered<WalletController>()
+          ? Get.find<WalletController>()
+          : Get.put(WalletController());
   late Rx<JobModel> job;
   var isDialogLoading = false.obs;
   var beforePhotos = <File>[].obs;
@@ -35,10 +37,10 @@ class JobDetailController extends GetxController {
     if (enteredPin == "1234") {
       updateStatus(JobStatus.inProgress);
       Get.back();
-        _notificationService.showJobStatusUpdate(
-    jobId: job.value.id,
-    status: 'inProgress',
-  );
+      _notificationService.showJobStatusUpdate(
+        jobId: job.value.id,
+        status: 'inProgress',
+      );
       Get.snackbar(
         "Success",
         "Job Started Successfully!",
@@ -91,16 +93,20 @@ class JobDetailController extends GetxController {
     if (enteredPin == "5678") {
       debugPrint("✅ End OTP verified - Job completing");
       updateStatus(JobStatus.completed);
-        _notificationService.showJobStatusUpdate(
-    jobId: job.value.id,
-    status: "completed",
-  );
-      walletController.addJobEarning(job.value.id, job.value.customerName, job.value.amount);
+      _notificationService.showJobStatusUpdate(
+        jobId: job.value.id,
+        status: "completed",
+      );
+      walletController.addJobEarning(
+        job.value.id,
+        job.value.customerName,
+        job.value.amount,
+      );
 
-        _notificationService.showWalletUpdate(
-    amount: job.value.amount,
-    type: 'credit',
-  );
+      _notificationService.showWalletUpdate(
+        amount: job.value.amount,
+        type: 'credit',
+      );
       Get.back();
       Get.snackbar(
         "Great Job!",
@@ -176,7 +182,7 @@ class JobDetailController extends GetxController {
     homeController.syncUpdateJob(job.value);
     Get.snackbar("Success", "Status updated to ${newStatus.name}");
   }
-
+  /*
   void addBeforePhoto() async {
     debugPrint("📸 addBeforePhoto() called");
 
@@ -197,6 +203,7 @@ class JobDetailController extends GetxController {
         imageQuality: 80,
         maxWidth: 1024,
         maxHeight: 1024,
+        requestFullMetadata: false,
       );
 
       if (image != null) {
@@ -249,6 +256,7 @@ class JobDetailController extends GetxController {
         imageQuality: 80,
         maxWidth: 1024,
         maxHeight: 1024,
+        requestFullMetadata: false
       );
 
       if (image != null) {
@@ -278,6 +286,41 @@ class JobDetailController extends GetxController {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+    }
+  }
+*/
+
+  void addBeforePhoto() async {
+    debugPrint("📸 addBeforePhoto() called");
+    final File? file = await Get.to<File?>(() => const InAppCameraScreen());
+    if (file != null) {
+      beforePhotos.add(file);
+      debugPrint("✅ Before photos count: ${beforePhotos.length}");
+      Get.snackbar(
+        "Success",
+        "Before photo added ✅",
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
+    } else {
+      debugPrint("⚠️ No photo taken");
+    }
+  }
+
+  void addAfterPhoto() async {
+    debugPrint("📸 addAfterPhoto() called");
+    final File? file = await Get.to<File?>(() => const InAppCameraScreen());
+    if (file != null) {
+      afterPhotos.add(file);
+      debugPrint("✅ After photos count: ${afterPhotos.length}");
+      Get.snackbar(
+        "Success",
+        "After photo added ✅",
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } else {
+      debugPrint("⚠️ No photo taken");
     }
   }
 

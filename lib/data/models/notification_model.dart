@@ -1,4 +1,4 @@
-enum NotificationType { jobAssigned, jobUpdate, wallet, otp, leave, general }
+enum NotificationType { jobAssigned, jobUpdate, wallet, otp, leave, general, walletDebit, leaveApproved, walletCredit, leaveRejected, otpStart, otpComplete }
 
 class NotificationModel {
   final String id;
@@ -8,6 +8,12 @@ class NotificationModel {
   final NotificationType type;
   final bool isRead;
   final String? jobId;
+  final String? customerName;
+  final double? amount;
+  final String? transactionId;
+  final String? leaveId;
+  final String? otpCode;
+  final String? status;
 
   NotificationModel({
     required this.id,
@@ -17,5 +23,11 @@ class NotificationModel {
     required this.type,
     this.isRead = false,
     this.jobId,
+    this.customerName,
+    this.amount,
+    this.transactionId,
+    this.leaveId,
+    this.otpCode,
+    this.status,
   });
 }
